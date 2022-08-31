@@ -79,7 +79,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ env.IMAGE_NAME }}:alpine-latest,${{ env.IMAGE_NAME }}:ALPINE-CI-${{ github.run_number}}
+        tags: ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:alpine-latest,${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:ALPINE-CI-${{ github.run_number}}
         file: ./Dockerfile.alpine
         cache-from: type=gha
         cache-to: type=gha,mode=max
