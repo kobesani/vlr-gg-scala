@@ -24,7 +24,9 @@ jobs:
       id: cache-mill
       uses: actions/cache@v3
       with:
-        path: ./foo
+        path: |
+          ./foo
+          ./out/foo/assembly/dest
         key: ${{ runner.os }}-mill-build
     - uses: actions/setup-java@v3
       with:
@@ -32,7 +34,7 @@ jobs:
         java-version: '11'
         check-latest: false
     - name: Build Jar
-      if: steps.cache-mill.outputs.cache-hit != 'true'
+      # if: steps.cache-mill.outputs.cache-hit != 'true'
       run: ./mill foo.assembly && ./mill show foo.assembly
     - name: Upload Jar Artifact
       uses: actions/upload-artifact@v3
