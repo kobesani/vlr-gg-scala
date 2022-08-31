@@ -5,6 +5,7 @@ RUN apk add openjdk11-jre
 COPY ./out.jar /opt/out.jar
 COPY ./run-vlr-scraper.py /opt/run-vlr-scraper.py
 COPY ./entrypoint.sh /opt/entrypoint.sh
+RUN chmod +x /opt/entrypoint.sh
 
 # ENTRYPOINT ["/bin/ash"]
 ENTRYPOINT ["/opt/entrypoint.sh"]
