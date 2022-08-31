@@ -17,11 +17,9 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v3
     - name: Set up JDK 11
-      uses: actions/setup-java@v3
+      uses: actions/setup-scala@v11
       with:
-        java-version: adopt@1.11
-        distribution: 'temurin'
-        cache: 'mill'
+        java-version: openjdk@1.11
     - name: Check some things
       run: echo "$PWD" && ls -lha
     - name: Build Jar
