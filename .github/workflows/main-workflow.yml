@@ -77,4 +77,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: [${{ env.IMAGE_NAME }}:ALPINE-CI-${GITHUB_RUN_NUMBER}, ${{ env.IMAGE_NAME }}:alpine-latest]
+        tags: ${{ env.IMAGE_NAME }}:ALPINE-CI-${GITHUB_RUN_NUMBER},${{ env.IMAGE_NAME }}:alpine-latest
