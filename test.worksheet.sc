@@ -1,9 +1,5 @@
-import org.apache.xpath.operations.Bool
-import net.sourceforge.htmlunit.corejs.javascript.json.JsonParser
-import $ivy.`com.lihaoyi::scalatags:0.7.0`
 import $ivy.`com.lihaoyi::requests:0.7.1`
 import $ivy.`net.ruippeixotog::scala-scraper:3.0.0`
-import $ivy.`com.github.nscala-time::nscala-time:2.32.0`
 import scala.util.matching.Regex
 
 import net.ruippeixotog.scalascraper.browser.JsoupBrowser
@@ -25,12 +21,12 @@ val cards = doc >> elementList(".col.mod-1 .wf-card")
 val dates = doc >> elementList(".col.mod-1 .wf-label.mod-large") >> allText
 
 
-val datetime = "^([A-z]{3}), ([A-z]+) ([0-9]{1,2}), ([0-9]{4}).*$".r
-val dateInputFormat = DateTimeFormatter.ofPattern("EEE, MMMM d, yyyy")
+val datetime = "^[A-z]{3}, ([A-z]+) ([0-9]{1,2}), ([0-9]{4}).*$".r
+val dateInputFormat = DateTimeFormatter.ofPattern("MMMM d, yyyy")
 
 def matchDateTime(str: String) : String = {
      str match {
-        case datetime(day_of_week, month, day, year) => s"$day_of_week, $month $day, $year"
+        case datetime(month, day, year) => s"$month $day, $year"
     }
 }
 
