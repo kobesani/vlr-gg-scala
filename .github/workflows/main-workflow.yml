@@ -32,6 +32,7 @@ jobs:
         retention-days: 1
   
   build-alpine:
+    needs: [build]
     name: Build Alpine Image
     runs-on: ubuntu-latest
     steps:
