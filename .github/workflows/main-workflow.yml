@@ -24,3 +24,9 @@ jobs:
       run: echo "$PWD" && ls -lha
     - name: Build Jar
       run: ./mill foo.assembly && ./mill show foo.assembly
+    - name: Upload Jar Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: foo-jar-file
+        path: ./out/foo/assembly/dest/out.jar
+        retention-days: 1
