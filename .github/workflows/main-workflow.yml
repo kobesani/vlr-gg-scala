@@ -17,10 +17,16 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v3
     - name: Set up JDK 11
-      uses: actions/setup-scala@v11
+      uses: olafurpg/setup-scala@v10
       with:
         java-version: openjdk@1.11
     - name: Check some things
       run: echo "$PWD" && ls -lha
     - name: Build Jar
       run: ./mill foo.assembly && ./mill show foo.assembly
+    - name: Upload Jar Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: foo-jar-file
+        path: ./out/foo/assembly/dest/out.jar
+        retention-days: 1
