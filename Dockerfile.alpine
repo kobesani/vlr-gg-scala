@@ -2,10 +2,8 @@ FROM python:alpine3.16
 
 RUN apk add openjdk11-jre
 
-COPY ./out.jar /opt/out.jar
-COPY ./run-vlr-scraper.py /opt/run-vlr-scraper.py
-COPY ./entrypoint.sh /opt/entrypoint.sh
-RUN chmod +x /opt/entrypoint.sh
+ADD ./scripts /opt/scripts
+COPY ./out.jar /opt/scripts/out.jar
+RUN chmod +x /opt/scripts/entrypoint.sh
 
-# ENTRYPOINT ["/bin/ash"]
-ENTRYPOINT ["/opt/entrypoint.sh"]
+ENTRYPOINT ["/opt/scripts/entrypoint.sh"]

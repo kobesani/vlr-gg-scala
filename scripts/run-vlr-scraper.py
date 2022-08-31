@@ -19,7 +19,7 @@ if __name__ == "__main__":
         "--jar-path",
         type=str,
         required=False,
-        default="/opt/out.jar",
+        default="/opt/scripts/out.jar",
         help="path to jar file (default is from alpine docker image, see Dockerfile.alpine)",
     )
 
