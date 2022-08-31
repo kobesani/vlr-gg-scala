@@ -1,7 +1,10 @@
 #! /usr/bin/env python3
 
 import argparse
+import io
 import subprocess
+import sys
+import time
 
 
 if __name__ == "__main__":
@@ -21,6 +24,14 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
+        "--log-path",
+        type=str,
+        required=False,
+        default="/opt/out.log",
+        help="path to jar file (default is from alpine docker image, see Dockerfile.alpine)",
+    )
+
+    parser.add_argument(
         "--number-times",
         type=str,
         required=False,
@@ -30,6 +41,12 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    out, err = subprocess.Popen(["java", "-jar", f"{args.jar_path}", args.number_times])
+    command = ["java", "-jar", f"{args.jar_path}", args.number_times]
 
-    print(out)
+    with io.open(args.out_log, "wb") as writer, io.open(args.out_log, "rb", 1) as reader:
+        process = subprocess.Popen(command, stdout=writer)
+        while process.poll() is None:
+            sys.stdout.write(reader.read())
+            time.sleep(0.5)
+        # Read the remaining
+        sys.stdout.write(reader.read())

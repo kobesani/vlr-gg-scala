@@ -24,7 +24,9 @@ jobs:
       id: cache-mill
       uses: actions/cache@v3
       with:
-        path: ./out
+        path: |
+          ./out
+          ./foo
         key: ${{ runner.os }}-mill-build
     - uses: actions/setup-java@v3
       with:
