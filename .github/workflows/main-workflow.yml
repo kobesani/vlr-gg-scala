@@ -51,10 +51,10 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker image
-      run: docker build . --file Dockerfile.alpine --tag ghcr.io/kobesani/vlr-gg-scala-alpine:CI-${GITHUB_RUN_NUMBER}
+      run: docker build . --file Dockerfile.alpine --tag ghcr.io/kobesani/vlr-gg-scala:ALPINE-CI-${GITHUB_RUN_NUMBER}
     - name: Tag image as latest
-      run: docker tag ghcr.io/kobesani/vlr-gg-scala-alpine:CI-${GITHUB_RUN_NUMBER} ghcr.io/kobesani/vlr-gg-scala-alpine:latest
+      run: docker tag ghcr.io/kobesani/vlr-gg-scala:ALPINE-CI-${GITHUB_RUN_NUMBER} ghcr.io/kobesani/vlr-gg-scala:alpine-latest
     - name: Push the Docker image with version number
-      run: docker push ghcr.io/kobesani/vlr-gg-scala-alpine:CI-${GITHUB_RUN_NUMBER}
+      run: docker push ghcr.io/kobesani/vlr-gg-scala:ALPINE-CI-${GITHUB_RUN_NUMBER}
     - name: Update / Push Docker image with latest tag
-      run: docker push ghcr.io/kobesani/vlr-gg-scala-alpine:latest
+      run: docker push ghcr.io/kobesani/vlr-gg-scala:alpine-latest
