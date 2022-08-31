@@ -60,13 +60,13 @@ jobs:
         password: ${{ secrets.CR_PAT }}
     -
       name: Build the Docker image
-      run: docker build . --file Dockerfile.alpine --tag ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:ALPINE-CI-${GITHUB_RUN_NUMBER}
+      run: docker build . --file Dockerfile.alpine --tag ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:ALPINE-CI-${GITHUB_RUN_NUMBER}
     -
       name: Tag image as latest
-      run: docker tag ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:ALPINE-CI-${GITHUB_RUN_NUMBER} ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:alpine-latest
+      run: docker tag ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:ALPINE-CI-${GITHUB_RUN_NUMBER} ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
     -
       name: Push the Docker image with version number
-      run: docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:ALPINE-CI-${GITHUB_RUN_NUMBER}
+      run: docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:ALPINE-CI-${GITHUB_RUN_NUMBER}
     -
       name: Update / Push Docker image with latest tag
-      run: docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:latest
+      run: docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
