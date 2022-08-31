@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--number-times",
-        type=int,
+        type=str,
         required=False,
         default=1,
         help="Number of times to print hello world :D",
@@ -33,4 +33,3 @@ if __name__ == "__main__":
     out, err = subprocess.Popen(["java", "-jar", f"{args.jar_path}", args.number_times])
 
     print(out)
-    
