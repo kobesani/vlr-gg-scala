@@ -24,7 +24,7 @@ if __name__ == "__main__":
         "--number-times",
         type=str,
         required=False,
-        default=1,
+        default="1",
         help="Number of times to print hello world :D",
     )
 
