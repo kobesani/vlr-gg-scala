@@ -78,3 +78,6 @@ jobs:
         context: .
         push: true
         tags: ${{ env.IMAGE_NAME }}:ALPINE-CI-${GITHUB_RUN_NUMBER},${{ env.IMAGE_NAME }}:alpine-latest
+        file: ./Dockerfile.alpine
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
