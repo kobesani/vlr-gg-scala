@@ -43,10 +43,10 @@ if __name__ == "__main__":
 
     command = ["java", "-jar", f"{args.jar_path}", args.number_times]
 
-    with io.open(args.log_path, "wb") as writer, io.open(args.log_path, "rb", 1) as reader:
+    with io.open(args.log_path, "wb") as writer, io.open(args.log_path, "rb") as reader:
         process = subprocess.Popen(command, stdout=writer)
         while process.poll() is None:
-            sys.stdout.write(reader.read())
+            sys.stdout.write(reader.read().decode('utf-8'))
             time.sleep(0.5)
         # Read the remaining
-        sys.stdout.write(reader.read())
+        sys.stdout.write(reader.read().decode('utf-8'))
