@@ -24,6 +24,12 @@ jobs:
     #   uses: olafurpg/setup-scala@v10
     #   with:
     #     java-version: openjdk@1.11
+    - name: Caching
+      id: cache-mill
+      uses: actions/cache@v3
+      with:
+        path: ./out
+        key: ${{ runner.os }}-mill-build
     - uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
@@ -32,6 +38,7 @@ jobs:
     - name: Check some things
       run: echo "$PWD" && ls -lha
     - name: Build Jar
+      if: steps.cache-mill.outputs.cache-hit != 'true'
       run: ./mill foo.assembly && ./mill show foo.assembly
     - name: Upload Jar Artifact
       uses: actions/upload-artifact@v3
