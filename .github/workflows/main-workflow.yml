@@ -30,7 +30,7 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '11'
-        check-latest: true
+        check-latest: false
     - name: Check some things
       run: echo "$PWD" && ls -lha
     - name: Build Jar

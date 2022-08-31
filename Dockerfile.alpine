@@ -3,5 +3,6 @@ FROM python:alpine3.16
 RUN apk add openjdk11-jre
 
 COPY ./out.jar /opt/out.jar
+COPY ./run-vlr-scraper.py /opt/run-vlr-scraper.py
 
 ENTRYPOINT ["/bin/ash"]
