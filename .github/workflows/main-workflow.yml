@@ -49,7 +49,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ secrets.CR_PAT }}
     - name: Build the Docker image
       run: docker build . --file Dockerfile.alpine --tag ghcr.io/kobesani/vlr-gg-scala:ALPINE-CI-${GITHUB_RUN_NUMBER}
     - name: Tag image as latest
