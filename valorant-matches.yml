@@ -1,0 +1,8 @@
+base_url: "https://vlr.gg/matches/results"
+selectors:
+  - attribute: date_containers
+    parent: doc
+    query: .col.mod-1 .wf-label.mod-large
+  - attribute: cards
+    parent: doc
+    query: .col.mod-1 .wf-card:not(.mod-header)

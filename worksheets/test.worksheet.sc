@@ -9,9 +9,10 @@ import net.ruippeixotog.scalascraper.dsl.DSL.Parse._
 
 import java.time.format.DateTimeFormatter
 import java.time.LocalDate
+import java.text.ParsePosition
 
 
-val url = "https://www.vlr.gg/matches/results/?page=4"
+val url = "https://www.vlr.gg/matches/results/?page=1"
 val resp: requests.Response = requests.get(url)
 
 val browser = JsoupBrowser()
@@ -76,35 +77,3 @@ val results: IndexedSeq[String] = getDatesFromPages(
 )
 results.foreach(println)
 
-val fizzbuzz = for (i <- Range.inclusive(1, 100)) yield {
-    if (i % 3 == 0 && i % 5 == 0) "FizzBuzz"
-    else if (i % 3 == 0) "Fizz"
-    else if (i % 5 == 0) "Buzz"
-    else i.toString
-}
-
-def flexFizzBuzz(f: String => Unit) : Unit = {
-    val fizzbuzz = for (i <- Range.inclusive(1, 100)) yield {
-        if (i % 3 == 0 && i % 5 == 0) f("FizzBuzz")
-        else if (i % 3 == 0) f("Fizz")
-        else if (i % 5 == 0) f("Buzz")
-        else f(i.toString)
-    }
-}
-
-flexFizzBuzz(s => {})
-flexFizzBuzz(s => println(s))
-
-var i = 0
-val output = new Array[String](100)
-
-flexFizzBuzz(
-    {
-        s => output(i) = s
-        i+=1
-    }
-)
-
-class Msg(val id: Int, val parent: Option[Int], val text: String)
-
-val test = new Msg(1, None, "test")
