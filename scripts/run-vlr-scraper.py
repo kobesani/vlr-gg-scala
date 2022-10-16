@@ -28,22 +28,25 @@ if __name__ == "__main__":
         type=str,
         required=False,
         default="/opt/out.log",
-        help="path to jar file (default is from alpine docker image, see Dockerfile.alpine)",
+        help="path to logfile (default is from alpine docker image, see Dockerfile.alpine)",
     )
 
     parser.add_argument(
-        "--number-times",
+        "--page-number",
         type=str,
         required=False,
         default="1",
-        help="Number of times to print hello world :D",
+        help="Match results page to request",
     )
 
     args = parser.parse_args()
 
-    command = ["java", "-jar", f"{args.jar_path}", args.number_times]
+    command = ["java", "-jar", f"{args.jar_path}", args.page_number]
 
-    with io.open(args.log_path, "wb") as writer, io.open(args.log_path, "rb") as reader:
+    with (
+        io.open(args.log_path, "wb") as writer,
+        io.open(args.log_path, "rb") as reader
+    ):
         process = subprocess.Popen(command, stdout=writer)
         while process.poll() is None:
             sys.stdout.write(reader.read().decode("utf-8"))
