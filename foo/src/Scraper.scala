@@ -12,11 +12,6 @@ import java.time.LocalDate
 import net.liftweb.json.{DefaultFormats, parse, JValue}
 import scala.io.Source
 import java.text.ParsePosition
-import requests.{Request, Response}
-// import requests.Response
-// import net.ruippeixotog.scalascraper.browser.JsoupBrowser
-// import net.ruippeixotog.scalascraper.browser.Browser
-// import net.ruippeixotog.scalascraper
 
 import net.ruippeixotog.scalascraper.browser.Browser
 import net.ruippeixotog.scalascraper.browser.JsoupBrowser
@@ -26,14 +21,20 @@ import net.ruippeixotog.scalascraper.dsl.DSL.Parse._
 
 import org.jsoup.nodes.DocumentType
 
-case class DateTime(
-    text: String, inputFormat: String, outputFormat: String, parsePosition: Int
-)
+
 case class Transformer(function: String, argument: String)
+
+
 case class ScraperSelector(
-    attribute: String, parent: String, query: String, datetime: DateTime, transformers: List[Transformer]
+    attribute: String,
+    parent: String,
+    query: String,
+    transformers: List[Transformer]
 )
+
+
 case class ScraperConfig(base_url: String, selectors: List[ScraperSelector])
+
 
 class WebScraper(val configuration: ScraperConfig) {
     def request(params: Map[String, String]): List[String] = {
@@ -49,21 +50,29 @@ class WebScraper(val configuration: ScraperConfig) {
     def get(document: Browser#DocumentType): List[String] = {
         configuration
             .selectors
-            .map(s => document >> elementList(s.query) >> allText)
+            .map(s => applySelector(document, selector = s))
             .flatten
     }
 
     def applySelector(
         document: Browser#DocumentType,
-        selector: Selector
+        selector: ScraperSelector
     ): List[String] = {
-        val initialResults = (document >> elementList(selector.query) >> allText)
-        return List[String]()
+        (document >> elementList(selector.query) >> allText) map {
+            res => transform(res, selector.transformers)
+        }
     }
 
-    // def transform(data: String, transformers: List[Transformer]): List[String] = {
-    //     val transformFunctions = transformers.map(t => ScraperUtilities.getFunction(t.function))
-    // }
+    def transform(data: String, transformers: List[Transformer]): String = {
+        var transformedData: String = data
+
+        transformers foreach {
+            t => transformedData = ScraperUtilities.apply(
+                transformedData, t.function, t.argument
+            )
+        }
+        transformedData
+    }
 }
 
 
@@ -80,22 +89,14 @@ object WebScraper {
 object ScraperUtilities {
     def apply(data: String, method: String, argument: String): String = {
         method match {
-            case "iso_date" => iso_date(data, argument)
+            case "isoDate" => isoDate(data, argument)
+            case "isoWeekDate" => isoWeekDate(data, argument)
+            case "doNothing" => doNothing(data, "")
+            case _ => doNothing(data, "")
         }
     }
 
-    // def getFunction(method: String): String => String = {
-    //     method match {
-    //         case "iso_date" => iso_date
-    //         case _ => do_nothing
-    //     }
-    // }
-
-    // def getFunctions(methods: List[String]): List[Function] = {
-    //     methods.map(m => getFunction(m))
-    // }
-
-    def iso_date(text: String, inputFormat: String): String = {
+    def isoDate(text: String, inputFormat: String): String = {
         LocalDate
             .from(
                 DateTimeFormatter
@@ -105,23 +106,20 @@ object ScraperUtilities {
             .format(DateTimeFormatter.ISO_DATE)
     }
 
-    def do_nothing(text: String, dummy: String): String = {
+    def isoWeekDate(text: String, inputFormat: String): String = {
+        LocalDate
+            .from(
+                DateTimeFormatter
+                .ofPattern(inputFormat)
+                .parse(text, new ParsePosition(0))
+            )
+            .format(DateTimeFormatter.ISO_WEEK_DATE)
+    }
+
+    def doNothing(text: String, dummy: String): String = {
         return text
     }
 }
-    // def apply(method: String, args: String*): String = {
-    //     method match {
-    //         case "parse_datetime_to_iso" => "SKDJskljLSKD"
-    //         case _ => "dsjhfkdjhfsd"
-    //     }
-    // }
-
-//     def parse_datetime_to_iso(text: String, format: String, parsePos: Int = 0) : String = {
-//         val inputFormat = DateTimeFormatter.ofPattern(format)
-//         val formatParse = inputFormat.parse(text, new ParsePosition(parsePos))
-//         LocalDate.from(formatParse).format(DateTimeFormatter.ISO_DATE)
-//     }
-// }
 
 
 class Scraper(val baseUrl: String, val configPath: String) {

@@ -6,17 +6,14 @@
             "parent": "doc",
             "query": ".col.mod-1 .wf-label.mod-large",
             "transformers": [
-                {"function": "iso_date", "argument": "MMMM d, yyyy"}
+                {"function": "isoDate", "argument": "EEE, MMMM d, yyyy"},
+                {"function": "isoWeekDate", "argument": "yyyy-MM-dd"}
             ]
         },
         {
             "attribute": "cards",
             "parent": "doc",
-            "query": ".col.mod-1 .wf-card:not(.mod-header)",
-            "datetime": null,
-            "transformers": [
-                {"function": "do_nothing", "argument": ""}
-            ]
+            "query": ".col.mod-1 .wf-card:not(.mod-header)"
         }
     ]
 }
