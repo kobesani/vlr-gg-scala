@@ -4,12 +4,19 @@
         {
             "attribute": "date_containers",
             "parent": "doc",
-            "query": ".col.mod-1 .wf-label.mod-large"
+            "query": ".col.mod-1 .wf-label.mod-large",
+            "transformers": [
+                {"function": "iso_date", "argument": "MMMM d, yyyy"}
+            ]
         },
         {
             "attribute": "cards",
             "parent": "doc",
-            "query": ".col.mod-1 .wf-card:not(.mod-header)"
+            "query": ".col.mod-1 .wf-card:not(.mod-header)",
+            "datetime": null,
+            "transformers": [
+                {"function": "do_nothing", "argument": ""}
+            ]
         }
     ]
 }
