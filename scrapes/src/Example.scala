@@ -1,4 +1,4 @@
-package foo
+package scrapes
 
 import scala.collection.mutable.Map
 

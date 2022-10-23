@@ -1,6 +1,6 @@
-package foo
+package scrapes
 import utest._
-object ExampleTests extends TestSuite{
+object ExampleTests extends TestSuite {
   def tests = Tests{
     test("hello"){
       val result = Example.hello()

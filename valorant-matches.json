@@ -6,8 +6,7 @@
             "parent": "doc",
             "query": ".col.mod-1 .wf-label.mod-large",
             "transformers": [
-                {"function": "isoDate", "argument": "EEE, MMMM d, yyyy"},
-                {"function": "isoWeekDate", "argument": "yyyy-MM-dd"}
+                {"function": "isoDate", "argument": "EEE, MMMM d, yyyy"}
             ]
         },
         {
