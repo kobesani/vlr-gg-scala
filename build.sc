@@ -9,7 +9,8 @@ object scrapes extends ScalaModule{
     ivy"net.ruippeixotog::scala-scraper:3.0.0",
     ivy"org.jsoup:jsoup:1.12.1",
     ivy"org.yaml:snakeyaml:1.23",
-    ivy"net.liftweb::lift-json:3.4.3"
+    ivy"net.liftweb::lift-json:3.4.3",
+    ivy"org.postgresql:postgresql:42.2.11"
   )
   object test extends Tests{
     def ivyDeps = Agg(
